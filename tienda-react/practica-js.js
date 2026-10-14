@@ -139,24 +139,3 @@ const valorInventario = productos.reduce(
 );
 console.log("Valor total del inventario: $", valorInventario);
 
-// ===== Reto 8: JavaScript moderno =====
-
-// Template literals
-console.log(`El producto ${productos[0].nombre} cuesta $${productos[0].precio}`);
-
-// Desestructuración
-const { nombre, precio, stock } = productos[0];
-console.log(nombre, precio, stock);
-
-// Spread (copia sin modificar el original)
-const productoActualizado = {
-  ...productos[0],
-  precio: 55000,
-  stock: 8
-};
-console.log("Original:", productos[0]);
-console.log("Actualizado:", productoActualizado);
-
-// Operador ternario
-const estado = productoActualizado.stock > 0 ? 'Disponible' : 'Agotado';
-console.log(`El producto ${productoActualizado.nombre} está: ${estado}`);
