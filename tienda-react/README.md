@@ -1,16 +1,77 @@
-# React + Vite
+# Tienda tecnológica — React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Práctica académica de React con CRUD de productos, persistencia temporal mediante `localStorage` y consulta de datos a PokéAPI.
 
-Currently, two official plugins are available:
+## Funcionalidades
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **CREATE:** agregar productos con nombre, precio y stock.
+- **READ:** listar los productos y ver el resumen del inventario.
+- **UPDATE:** editar un producto existente.
+- **DELETE:** eliminar un producto con confirmación.
+- **Persistencia local:** recuperar el inventario al abrir la aplicación y guardar los cambios cuando el estado cambia.
+- **Búsqueda:** filtrar productos por nombre.
+- **Mini PokéAPI:** consultar un Pokémon por nombre o número; muestra imagen, número, altura, peso y tipos.
+- **Validaciones:** nombre obligatorio, precio mayor que cero y stock entero no negativo.
 
-## React Compiler
+## Cómo ejecutar
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Necesitas Node.js instalado. Abre una terminal en la carpeta `tienda-react` y ejecuta:
 
-## Expanding the Oxlint configuration
+```bash
+npm install
+npm run dev
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+Abre la URL local que muestre Vite en la terminal. Para comprobar la versión de entrega:
+
+```bash
+npm run build
+```
+
+## Cómo funciona `localStorage`
+
+1. `leerProductosGuardados()` intenta recuperar la clave `productos` al iniciar.
+2. `JSON.parse()` transforma el texto guardado en un arreglo de JavaScript.
+3. `useState()` mantiene el inventario actual en React.
+4. `useEffect()` ejecuta `localStorage.setItem()` cada vez que cambia el arreglo.
+5. `JSON.stringify()` convierte el arreglo a texto para poder guardarlo.
+
+`localStorage` conserva datos en el navegador utilizado. No es una base de datos central ni debe usarse para contraseñas o datos sensibles. Si se borran los datos del sitio/navegador, el inventario guardado también puede desaparecer.
+
+## Pruebas manuales para la entrega
+
+1. Agrega un producto y confirma que aparece en el listado.
+2. Edita el producto y confirma que cambia su nombre, precio o stock.
+3. Recarga con `F5` y comprueba que el producto sigue allí.
+4. Elimina un producto, recarga y comprueba que no reaparece.
+5. Intenta guardar sin nombre, con precio `0` y con stock negativo; deben mostrarse validaciones.
+6. Busca un producto por parte del nombre.
+7. En PokéAPI consulta `pikachu` o `25`; después prueba un nombre inventado y comprueba el mensaje de error.
+
+La consulta a PokéAPI requiere conexión a internet. El inventario local no necesita un servidor para guardar sus cambios.
+
+## Archivos principales
+
+- `src/App.jsx`: estados, CRUD, validación, búsqueda y persistencia.
+- `src/components/ProductoCard.jsx`: tarjeta individual de producto.
+- `src/components/BuscadorPokemon.jsx`: consulta a la API externa.
+- `src/App.css` y `src/index.css`: presentación y estilos adaptables.
+- `src/data/productos.js`: inventario de ejemplo usado la primera vez.
+
+## Commits sugeridos para el proceso
+
+```bash
+git add .
+git commit -m "feat: implementar CRUD local con React"
+
+git add .
+git commit -m "feat: persistir inventario con localStorage"
+
+git add .
+git commit -m "feat: consultar PokéAPI desde React"
+
+git add .
+git commit -m "style: mejorar interfaz de tienda tecnológica"
+```
+
+Antes de hacer `git push`, revisa `git status` y confirma que estás en el repositorio correcto.
